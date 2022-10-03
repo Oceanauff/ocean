@@ -1,32 +1,35 @@
-import react from 'react';
-import Btn from './component/Btn';
-import styles from './assets/css/App.module.css';
+import { useState } from "react";
 
 function App() {
-  const [keyword, setKeyword] = react.useState('');
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
   const onChange = event => {
-    setKeyword(event.target.value);
+    setToDo(event.target.value);
   };
-  console.log('i run all the time');
-  react.useEffect(() => {
-    console.log('CALL THE API');
-  }, []);
-  react.useEffect(() => {
-    console.log('Searching');
-  }, [keyword]);
+  const onSubmit = event => {
+    event.preventDefault();
+    if (toDo === "") {
+      return;
+    }
+    setToDos(currenArray => [toDo, ...currenArray]);
+    setToDo("");
+  };
   return (
     <div>
-      <h1 className={styles.title}>Welcome React</h1>
-      <input
-        value={keyword}
-        onChange={onChange}
-        type="text"
-        placeholder="search box"
-      />
-      <button>search</button>
-      <div>
-        <Btn text="hi" />
-      </div>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="Write your to do..."
+        />
+        <button>Add To Do</button>
+      </form>
+      <hr />
+      {toDos.map((toDo, index) => (
+        <li key={index}>{toDo}</li>
+      ))}
     </div>
   );
 }
