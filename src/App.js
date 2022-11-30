@@ -12,16 +12,17 @@ function App() {
       .then(json => {
         setTop100(json);
         setLoading(false);
+        console.log(json);
       });
   }, []);
-
-  const testFunc = event => {
-    alert('Clicked!!!');
-  };
 
   const onChange = event => {
     console.log(event.target.value);
     setSearch(prev => event.target.value);
+  };
+
+  const onClick = event => {
+    console.dir(event.target);
   };
 
   const fetchingInfo = event => {
@@ -31,43 +32,29 @@ function App() {
         setTop100(json);
         setLoading(false);
       });
-      console.log("dd");
-      console.log(top100);
-      console.dir(top100);
-      console.log(typeof(top100));
-    // fetch('/api.php?request=appdetails&appid=' + search)
-    // .then(response => response.json())
-    // .then(json => {
-    //   setTop100(json);
-    //   setLoading(false);
-    // });
-  };
-
-  const twoWeeksTop = evnet => {
-    fetch('/api.php?request=top100in2weeks')
-      .then(response => response.json())
-      .then(json => {
-        setTop100(json);
-        setLoading(false);
-    });
+    console.log('dd');
     console.log(top100);
-  }
+    console.dir(top100);
+    console.log(typeof top100);
+  };
 
   return (
     <>
-      <h1>The Games! ({games.length})</h1>
+      <h1>The Games!</h1>
       {loading ? (
         <strong>Loading...</strong>
       ) : (
         <>
           <input onChange={onChange} placeholder="plz game tag" />
+
           <button onClick={fetchingInfo}>search</button>
 
           {/* <button onClick={twoWeeksTop}>2 Weeks Top 100 games</button> */}
           {Object.values(top100).map((data, idx) => (
-            <li>
+            <li key={data.name} onClick={onClick}>
               {/* {data.name} ({data.symbol}: ${data.quotes.USD.price} USD) */}
-              {idx+1}. {data.name} ({data.symbol})
+              {idx + 1}. {data.name} ({data.positive} 따봉) - 할인률 :{' '}
+              {data.discount}%
             </li>
           ))}
         </>
