@@ -45,10 +45,10 @@ function App() {
         <strong>Loading...</strong>
       ) : (
         <>
-          <input onChange={onChange} placeholder="plz game tag" />
-
-          <button onClick={fetchingInfo}>search</button>
-
+          <div class="col-sm-10">
+            <input onChange={onChange} class="form-control" id="formGroupInputSmall" placeholder="plz game tag" />
+            <button onClick={fetchingInfo} class="btn btn-primary">search</button>
+          </div>
           {/* <button onClick={twoWeeksTop}>2 Weeks Top 100 games</button> */}
           {Object.values(top100).map((data, idx) => (
             <li key={data.name} onClick={onClick}>
